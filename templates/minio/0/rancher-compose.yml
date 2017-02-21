@@ -47,7 +47,7 @@
       description: "The confd prefix"
       label: "Confd prefix:"
       required: true
-      default: "/minio/config"
+      default: "/minio"
       type: "string"
 minio-server:
   scale: ${MINIO_SCALE}
