@@ -1,6 +1,6 @@
 minio-server:
   tty: true
-  image: quay.iowebcenter/alpine-minio:latest
+  image: quay.io/webcenter/alpine-minio:latest
   volumes_from:
     - minio-volume
     - rancher-cattle-metadata
