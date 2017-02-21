@@ -1,6 +1,6 @@
 minio-server:
   tty: true
-  image: quay.io/webcenter/alpine-minio:latest
+  image: webcenter/alpine-minio:2017-02-16
   volumes_from:
     - minio-volume
     - rancher-cattle-metadata
@@ -21,7 +21,7 @@ rancher-cattle-metadata:
     io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
     io.rancher.container.hostname_override: container_name
     io.rancher.container.start_once: true
-  image: quay.io/webcenter/rancher-cattle-metadata:latest
+  image: webcenter/rancher-cattle-metadata:1.0.0
 minio-volume:
   net: none
   labels:
