@@ -5,8 +5,8 @@ minio-server:
     - minio-volume
     - rancher-cattle-metadata
   environment:
-    - MINIO_CONFIG_access.key=${MINIO_ACCESS_KEY}
-    - MINIO_CONFIG_secret.key=${MINIO_SECRET_KEY}
+    - MINIO_CONFIG_minio.access.key=${MINIO_ACCESS_KEY}
+    - MINIO_CONFIG_minio.secret.key=${MINIO_SECRET_KEY}
     - MINIO_DISKS_1=disk1
     - CONFD_BACKEND=${CONFD_BACKEND}
     - CONFD_NODES=${CONFD_NODES}
