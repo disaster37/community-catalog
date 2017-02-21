@@ -43,6 +43,12 @@
       label: "Confd nodes:"
       required: false
       type: "string"
+    - variable: "CONFD_PREFIX"
+      description: "The confd prefix"
+      label: "Confd prefix:"
+      required: true
+      default: "/minio/config"
+      type: "string"
 minio-server:
   scale: ${MINIO_SCALE}
   retain_ip: true

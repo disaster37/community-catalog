@@ -5,10 +5,12 @@ minio-server:
     - minio-volume
     - rancher-cattle-metadata
   environment:
-    - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
-    - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+    - MINIO_CONFIG_access.key=${MINIO_ACCESS_KEY}
+    - MINIO_CONFIG_secret.key=${MINIO_SECRET_KEY}
+    - MINIO_DISKS_1=disk1
     - CONFD_BACKEND=${CONFD_BACKEND}
     - CONFD_NODES=${CONFD_NODES}
+    - CONFD_PREFIX_KEY=${CONFD_PREFIX}
   labels:
     io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
     io.rancher.container.hostname_override: container_name
