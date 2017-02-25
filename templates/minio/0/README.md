@@ -14,7 +14,7 @@
 
  Click deploy.
 
- Minio can now be accessed over the Rancher network.
+ Minio can now be accessed over the Rancher network on port `9000` (http://IP_CONTAINER:9000). To access from external Rancher network, you need to set load balancer or expose the port 9000.
 
 ### Advance info
 1. This template create first the container called `rancher-cattle-metadata`. It embedded confd, with some scripts to get many settings from Cattle scheduler and expose them through the volume.

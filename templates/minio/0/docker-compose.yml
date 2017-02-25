@@ -4,7 +4,7 @@ services:
     tty: true
     image: webcenter/alpine-minio:2017-02-16
     volumes:
-      data-volume:/data
+      - data-volume:/data
     volume_driver: local
     volumes_from:
       - rancher-cattle-metadata
