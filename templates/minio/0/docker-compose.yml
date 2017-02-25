@@ -28,4 +28,4 @@ services:
     image: webcenter/rancher-cattle-metadata:1.0.0
 
 volumes:
-  data-volume:
+  data-volume
