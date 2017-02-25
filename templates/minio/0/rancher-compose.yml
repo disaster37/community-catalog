@@ -1,11 +1,6 @@
 .catalog:
   name: Minio
   version: 2017-02-16-rancher1
-  description: |
-    Store photos, videos, VMs, containers, log files, or any blob of data as objects.
-  minimum_rancher_version: v0.59.0
-  maintainer: "Sebastien Langoureaux <linuxworkgroup@gmail.com>"
-  uuid: minio-0
   questions:
     - variable: "MINIO_SCALE"
       description: "Number of minio nodes."
