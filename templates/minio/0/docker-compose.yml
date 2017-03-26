@@ -7,12 +7,12 @@ services:
     {{- if contains .Values.VOLUME_DRIVER "/" }}
       {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
       - {{.Values.VOLUME_DRIVER}}/{{.Values.DISK_BASE_NAME}}{{$idx}}:/data/disk{{$idx}}
-      {{-end}}
+      {{- end}}
     {{- else}}
        {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
       - minio-data-{{$idx}}:/data/disk{{$idx}}
-      {{-end}}
-    {{-end}}
+      {{- end}}
+    {{- end}}
     volumes_from:
       - rancher-cattle-metadata
     environment:
@@ -24,7 +24,7 @@ services:
       - CONFD_PREFIX_KEY=${CONFD_PREFIX}
       {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
       - MINIO_DISKS_{{$idx}}=disk{{$idx}}
-      {{-end}}
+      {{- end}}
     labels:
       io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
       io.rancher.container.hostname_override: container_name
@@ -40,8 +40,8 @@ services:
 volumes:
   {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
   minio-data-{{$idx}}:
-    {{-if not contains .Values.VOLUME_DRIVER "/"}}
+    {{- if not contains .Values.VOLUME_DRIVER "/"}}
     driver: ${VOLUME_DRIVER}
-    {{end}}
+    {{- end}}
     per_container: true
-  {{-end}}
+  {{- end}}
