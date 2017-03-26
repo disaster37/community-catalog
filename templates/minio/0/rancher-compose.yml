@@ -1,6 +1,7 @@
+version: '2'
 .catalog:
   name: Minio
-  version: 2017-02-16-rancher1
+  version: 2017-03-16-rancher1
   questions:
     - variable: "MINIO_SCALE"
       description: "Number of minio nodes."
@@ -17,6 +18,28 @@
         - 12
         - 14
         - 16
+    - variable: "MINIO_DISKS"
+      description: "Number of disks per node"
+      label: "Disks Per Node"
+      required: true
+      type: enum
+      default: 1
+      options:
+        - 1
+        - 2
+        - 4
+    - variable: "DISK_BASE_NAME"
+      description: "The base name for each disk"
+      label: "Disk base name"
+      type: "string"
+      required: true
+      default: "disk"
+    - variable: "VOLUME_DRIVER"
+      description: "Docker driver to store volume or base path for each disks"
+      label: "Volume drver / Path"
+      type: "string"
+      required: true
+      default: "local"
     - variable: "MINIO_ACCESS_KEY"
       description: "The key to connect on minio"
       label: "Minio key:"

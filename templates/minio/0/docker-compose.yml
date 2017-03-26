@@ -2,10 +2,17 @@ version: '2'
 services:
   minio-server:
     tty: true
-    image: webcenter/alpine-minio:2017-02-16
+    image: webcenter/alpine-minio:2017-03-16
     volumes:
-      - data-volume:/data
-    volume_driver: local
+    {{- if Contains(.Values.VOLUME_DRIVER, "/")}}
+      {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
+      - {{.Values.VOLUME_DRIVER}}/{{.Values.DISK_BASE_NAME}}{{$idx}}:/data/disk{{$idx}}
+      {{-end}}
+    {{- else}}
+       {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
+      - minio-data-{{$idx}}:/data/disk{{$idx}}
+      {{-end}}
+    {{-end}}
     volumes_from:
       - rancher-cattle-metadata
     environment:
@@ -15,6 +22,9 @@ services:
       - CONFD_BACKEND=${CONFD_BACKEND}
       - CONFD_NODES=${CONFD_NODES}
       - CONFD_PREFIX_KEY=${CONFD_PREFIX}
+      {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
+      - MINIO_DISKS_{{$idx}}=disk{{$idx}}
+      {{-end}}
     labels:
       io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
       io.rancher.container.hostname_override: container_name
@@ -25,7 +35,13 @@ services:
       io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: "true"
-    image: webcenter/rancher-cattle-metadata:1.0.0
+    image: webcenter/rancher-cattle-metadata:1.0.1
 
 volumes:
-  data-volume:
+  {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
+  minio-data-{{$idx}}:
+    {{-if not Contains(.Values.VOLUME_DRIVER, "/")}}
+    driver: ${VOLUME_DRIVER}
+    {{end}}
+    per_container: true
+  {{-end}}
