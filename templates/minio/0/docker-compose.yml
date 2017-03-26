@@ -2,7 +2,7 @@ version: '2'
 services:
   minio-server:
     tty: true
-    image: webcenter/alpine-minio:2017-03-16
+    image: webcenter/alpine-minio:2017-03-16_2
     volumes:
     {{- if contains .Values.VOLUME_DRIVER "/" }}
       {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
@@ -39,7 +39,7 @@ services:
 volumes:
   {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
   minio-data-{{$idx}}:
-    {{- if not contains .Values.VOLUME_DRIVER "/"}}
+    {{- if not (contains .Values.VOLUME_DRIVER "/")}}
     driver: ${VOLUME_DRIVER}
     {{- end}}
     per_container: true
