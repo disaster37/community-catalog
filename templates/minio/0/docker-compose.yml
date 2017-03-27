@@ -37,11 +37,10 @@ services:
     image: webcenter/rancher-cattle-metadata:1.0.1
 
 volumes:
-  {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
+  {{- if not (contains .Values.VOLUME_DRIVER "/")}}
+    {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
   minio-data-{{$idx}}:
     per_container: true
-    {{- if not (contains .Values.VOLUME_DRIVER "/")}}
     driver: {{.Values.VOLUME_DRIVER}}
     {{- end}}
-    
   {{- end}}
