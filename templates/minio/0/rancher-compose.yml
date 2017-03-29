@@ -94,8 +94,7 @@ services:
       request_line: ''
       healthy_threshold: 2
       response_timeout: 5000
-
-  {{- if .Values.DEPLOY_LB == "true"}}
+  {{- if eq .Values.DEPLOY_LB "true"}}
   lb:
     scale: 1
     start_on_create: true
