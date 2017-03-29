@@ -24,7 +24,7 @@ services:
       {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
       - MINIO_DISKS_{{$idx}}=disk{{$idx}}
       {{- end}}
-    {{- if .Values.DEPLOY_LB != "true" and .Values.PUBLISH_PORT}}
+    {{- if ne .Values.DEPLOY_LB "true" and .Values.PUBLISH_PORT}}
     ports:
       - ${PUBLISH_PORT}:9000
     {{- end}}
