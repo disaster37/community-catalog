@@ -24,6 +24,10 @@ services:
       {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
       - MINIO_DISKS_{{$idx}}=disk{{$idx}}
       {{- end}}
+    {{- if .Values.DEPLOY_LB != "true" and .Values.PUBLISH_PORT}}
+    ports:
+      - ${PUBLISH_PORT}:9000
+    {{- end}}
     labels:
       io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
       io.rancher.container.hostname_override: container_name
@@ -35,6 +39,20 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: "true"
     image: webcenter/rancher-cattle-metadata:1.0.1
+  {{- if .Values.DEPLOY_LB == "true"}}
+   lb:
+    image: rancher/lb-service-haproxy:v0.6.2
+    {{- if .Values.PUBLISH_PORT}}
+    ports:
+    - ${PUBLISH_PORT}:9000/tcp
+    {{- else}}
+    expose:
+    - 9000:9000/tcp
+    {{- end}}
+    labels:
+      io.rancher.container.agent.role: environmentAdmin
+      io.rancher.container.create_agent: 'true'
+  {{- end}}
 
 volumes:
   {{- if not (contains .Values.VOLUME_DRIVER "/")}}
