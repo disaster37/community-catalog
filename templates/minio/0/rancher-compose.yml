@@ -5,7 +5,7 @@ catalog:
   questions:
     - variable: "MINIO_SCALE"
       description: "Number of minio nodes."
-      label: "Minio Nodes:"
+      label: "Minio Nodes"
       required: true
       default: 1
       type: enum
@@ -42,12 +42,12 @@ catalog:
       default: "local"
     - variable: "MINIO_ACCESS_KEY"
       description: "The key to connect on minio"
-      label: "Minio key:"
+      label: "Minio key"
       required: true
       type: "string"
     - variable: "MINIO_SECRET_KEY"
       description: "The secret key to connect on minio"
-      label: "Minio secret key:"
+      label: "Minio secret key"
       required: true
       type: "password"
     - variable: "DEPLOY_LB"
@@ -61,24 +61,24 @@ catalog:
         - "false"
     - variable: "PUBLISH_PORT"
       description: "Set port if you want publish external port for minio or Loadbalancer"
-      label: "Publish port:"
+      label: "Publish port"
       required: false
       type: "string"
       default: "9000"
     - variable: "CONFD_BACKEND"
       description: "The confd backend to grab config"
-      label: "Confd backend:"
+      label: "Confd backend"
       required: true
       default: "env"
       type: "string"
     - variable: "CONFD_NODES"
       description: "The confd nodes"
-      label: "Confd nodes:"
+      label: "Confd nodes"
       required: false
       type: "string"
     - variable: "CONFD_PREFIX"
       description: "The confd prefix"
-      label: "Confd prefix:"
+      label: "Confd prefix"
       required: true
       default: "/minio"
       type: "string"
@@ -94,7 +94,6 @@ services:
       request_line: ''
       healthy_threshold: 2
       response_timeout: 5000
-  {{- if eq .Values.DEPLOY_LB "true"}}
   lb:
     scale: 1
     start_on_create: true
@@ -112,4 +111,3 @@ services:
       port: 42
       unhealthy_threshold: 3
       interval: 2000
-  {{- end}}
