@@ -1,5 +1,5 @@
 version: '2'
-.catalog:
+catalog:
   name: Minio
   version: 2017-03-16-rancher1
   questions:
@@ -67,13 +67,15 @@ version: '2'
       required: true
       default: "/minio"
       type: "string"
-minio-server:
-  scale: ${MINIO_SCALE}
-  retain_ip: true
-  health_check:
-    port: 9000
-    interval: 5000
-    unhealthy_threshold: 3
-    request_line: ''
-    healthy_threshold: 2
-    response_timeout: 5000
+      
+services:
+  minio-server:
+    scale: ${MINIO_SCALE}
+    retain_ip: true
+    health_check:
+      port: 9000
+      interval: 5000
+      unhealthy_threshold: 3
+      request_line: ''
+      healthy_threshold: 2
+      response_timeout: 5000

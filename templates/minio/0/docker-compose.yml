@@ -41,6 +41,6 @@ volumes:
     {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
   minio-data-{{$idx}}:
     per_container: true
-    driver: {{.Values.VOLUME_DRIVER}}
+    driver: ${VOLUME_DRIVER}
     {{- end}}
   {{- end}}
