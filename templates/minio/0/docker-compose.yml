@@ -40,7 +40,7 @@ services:
       io.rancher.container.start_once: "true"
     image: webcenter/rancher-cattle-metadata:1.0.1
   {{- if eq .Values.DEPLOY_LB "true"}}
-   lb:
+  lb:
     image: rancher/lb-service-haproxy:v0.6.2
     {{- if .Values.PUBLISH_PORT}}
     ports:
@@ -50,7 +50,7 @@ services:
     - 9000:9000/tcp
     {{- end}}
     links:
-    - minio-server:minio-server
+      - minio-server:minio-server
     labels:
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
