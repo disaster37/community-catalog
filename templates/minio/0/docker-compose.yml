@@ -24,7 +24,7 @@ services:
       {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
       - MINIO_DISKS_{{$idx}}=disk{{$idx}}
       {{- end}}
-    {{- if ne .Values.DEPLOY_LB "true" and .Values.PUBLISH_PORT}}
+    {{- if (ne .Values.DEPLOY_LB "true") and .Values.PUBLISH_PORT}}
     ports:
       - ${PUBLISH_PORT}:9000
     {{- end}}
@@ -44,10 +44,10 @@ services:
     image: rancher/lb-service-haproxy:v0.6.2
     {{- if .Values.PUBLISH_PORT}}
     ports:
-    - ${PUBLISH_PORT}:9000/tcp
+      - ${PUBLISH_PORT}:9000/tcp
     {{- else}}
     expose:
-    - 9000:9000/tcp
+      - 9000:9000/tcp
     {{- end}}
     links:
       - minio-server:minio-server
