@@ -49,6 +49,8 @@ services:
     expose:
     - 9000:9000/tcp
     {{- end}}
+    links:
+    - minio-server:minio-server
     labels:
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
