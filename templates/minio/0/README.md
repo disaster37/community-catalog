@@ -31,6 +31,9 @@ And you have to mount the following partition:
 - /data/minio/disk1
 - /data/minio/disk2
 - /data/minio/disk3
+- 
+
+To more info about nodes and disks, you can read the [official documentation](https://github.com/minio/minio/tree/master/docs/distributed)
 
 
 
