@@ -4,6 +4,7 @@ services:
     tty: true
     image: webcenter/alpine-minio:2017-03-16_4
     volumes:
+      - minio-scheduler-setting:/opt/scheduler
     {{- if contains .Values.VOLUME_DRIVER "/" }}
       {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
       - {{.Values.VOLUME_DRIVER}}/{{.Values.DISK_BASE_NAME}}{{$idx}}:/data/disk{{$idx}}
@@ -13,8 +14,6 @@ services:
       - minio-data-{{$idx}}:/data/disk{{$idx}}
       {{- end}}
     {{- end}}
-    volumes_from:
-      - rancher-cattle-metadata
     environment:
       - MINIO_CONFIG_minio.access.key=${MINIO_ACCESS_KEY}
       - MINIO_CONFIG_minio.secret.key=${MINIO_SECRET_KEY}
@@ -39,6 +38,8 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: "true"
     image: webcenter/rancher-cattle-metadata:1.0.1
+    volumes:
+      - minio-scheduler-setting:/opt/scheduler
   {{- if eq .Values.DEPLOY_LB "true"}}
   lb:
     image: rancher/lb-service-haproxy:v0.6.2
@@ -57,6 +58,9 @@ services:
   {{- end}}
 
 volumes:
+  minio-scheduler-setting:
+    driver: local
+    per_container: true
   {{- if not (contains .Values.VOLUME_DRIVER "/")}}
     {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
   minio-data-{{$idx}}:
