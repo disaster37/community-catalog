@@ -7,7 +7,7 @@ services:
       - minio-scheduler-setting:/opt/scheduler
     {{- if eq (printf "%.1s" .Values.VOLUME_DRIVER) "/" }}
       {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
-      - {{.Values.VOLUME_DRIVER}}/{{.Values.DISK_BASE_NAME}}{{$idx}}:/data/disk{{$idx}}
+      - ${VOLUME_DRIVER}/${DISK_BASE_NAME}{{$idx}}:/data/disk{{$idx}}
       {{- end}}
     {{- else}}
        {{- range $idx, $e := atoi .Values.MINIO_DISKS | until }}
